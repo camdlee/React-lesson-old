@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import Nav from './components/Nav'
+import Home from './views/Home';
+import Pokemon from './views/Pokemon';
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 
-function App() {
+import React, { Component } from 'react'
+import Feed from './views/Feed';
+
+export default class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      name: 'dylan',
+      age: 101
+    }
+  }
+
+  addOne = () => {
+    console.log('button clicked')
+    this.setState({
+      age: this.state.age + 1
+    })
+  }
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <div>
+        <Nav/>
+        <Routes>
+          <Route path='/' element={<Home age={this.state.age} addOne={this.addOne} name={this.state.name}/>}/>
+          <Route path='/pokemon' element={<Pokemon/>}/>
+          <Route path='/feed' element={<Feed/>}/>
+        </Routes>
+      </div>
+    </BrowserRouter>
+    );
+  }
+
 }
 
-export default App;
